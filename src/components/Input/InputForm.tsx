@@ -4,21 +4,22 @@ import { useAddTodo } from "../../services/todosService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const InputForm = () => {
-  const { inputValue, setInputValue } = useInputStore();
+  const { inputValue, setInputValue, clearInputValue } = useInputStore();
+  console.log(inputValue);
 
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate: handleAddTodo } = useMutation({
     mutationFn: (e: React.FormEvent<HTMLFormElement>) =>
       useAddTodo(e, inputValue),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
+      clearInputValue();
     },
   });
 
-  console.log(inputValue);
   return (
-    <form onSubmit={(e) => mutate(e)}>
+    <form onSubmit={(e) => handleAddTodo(e)}>
       <input
         type="text"
         value={inputValue}
