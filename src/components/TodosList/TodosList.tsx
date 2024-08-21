@@ -1,6 +1,8 @@
+import styled from "./TodosList.module.scss";
 import { useGetTodos, useDeleteTodo } from "../../services/todosService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import TodoItem from "../TodoItem/TodoItem";
+import TodosControls from "./TodosControls";
 
 const TodosList = () => {
   const { data, isLoading } = useQuery({
@@ -34,8 +36,8 @@ const TodosList = () => {
             todos={todo.title}
           />
         ))}
-        <li>Config</li>
       </ul>
+      <TodosControls className={styled.controls} />
     </div>
   );
 };

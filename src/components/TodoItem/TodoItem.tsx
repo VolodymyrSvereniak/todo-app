@@ -8,10 +8,10 @@ interface TodoItemProps {
 const TodoItem: React.FC<TodoItemProps> = ({ todos, handleDeleteTodo }) => {
   return (
     <li>
-      <button
-        className={styles.submitButton}
-        onClick={handleDeleteTodo}
-      ></button>
+      <button className={styles.submitButton} onClick={handleDeleteTodo}>
+        &times;
+      </button>
+      <button className={styles.submitButton}></button>
       <span>{todos}</span>
     </li>
   );
