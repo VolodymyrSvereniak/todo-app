@@ -3,10 +3,11 @@ import {
   useGetAllTodos,
   useDeleteTodo,
   setAsCompleted,
-} from "../../services/todosService";
+} from "../../services/todosDBService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import TodoItem from "../TodoItem/TodoItem";
 import TodosControls from "./TodosControls";
+import { useState } from "react";
 
 interface IUpdateTodoStatus {
   todoID: string;
@@ -15,6 +16,8 @@ interface IUpdateTodoStatus {
 }
 
 const TodosList = () => {
+  const [filterTodos, setFilterTodos] = useState<string>("");
+
   const { data, isLoading } = useQuery({
     queryKey: ["todos"],
     queryFn: useGetAllTodos,
@@ -22,6 +25,12 @@ const TodosList = () => {
   });
 
   console.log(data);
+
+  const filteredTodos = data?.filter((todo) => {
+    if (filterTodos === "completed") return todo.isCompleted;
+    if (filterTodos === "active") return todo.isActive;
+    return true;
+  });
 
   const queryClient = useQueryClient();
 
@@ -51,7 +60,7 @@ const TodosList = () => {
   return (
     <div>
       <ul>
-        {data?.map((todo) => (
+        {filteredTodos?.map((todo) => (
           <TodoItem
             key={todo.id}
             todoTitle={todo.title}
@@ -66,7 +75,10 @@ const TodosList = () => {
           />
         ))}
       </ul>
-      <TodosControls className={styled.controls} />
+      <TodosControls
+        className={styled.controls}
+        setFilterTodos={setFilterTodos}
+      />
     </div>
   );
 };

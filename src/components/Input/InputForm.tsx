@@ -1,6 +1,6 @@
 import styles from "./InputForm.module.scss";
 import { useInputStore } from "./useInputStore";
-import { useAddTodo } from "../../services/todosService";
+import { useAddTodo } from "../../services/todosDBService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const InputForm = () => {

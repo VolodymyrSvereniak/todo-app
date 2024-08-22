@@ -1,19 +1,16 @@
-// import { useQuery } from "@tanstack/react-query";
-// import { useGetAllTodos } from "../../services/todosService";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useDeleteCompletedTodos } from "../../services/todosService";
+import { useDeleteCompletedTodos } from "../../services/todosDBService";
 
-const TodosControls: React.FC<Record<string, string>> = ({
+interface ITodosControlsProps {
+  className: string;
+  setFilterTodos: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const TodosControls: React.FC<ITodosControlsProps> = ({
   className: controls,
+  setFilterTodos
 }) => {
   const queryClient = useQueryClient();
-
-  // const { data } = useQuery({
-  //   queryKey: ["todos"],
-  //   queryFn: useGetAllTodos,
-  //   staleTime: Infinity,
-  // });
 
   const { mutate } = useMutation({
     mutationFn: () => useDeleteCompletedTodos(),
@@ -30,9 +27,9 @@ const TodosControls: React.FC<Record<string, string>> = ({
     <section className={controls}>
       <span>items left</span>
       <ul>
-        <li>All</li>
-        <li>Active</li>
-        <li>Completed</li>
+        <li onClick={() => setFilterTodos('all')}>All</li>
+        <li onClick={() => setFilterTodos('active')}>Active</li>
+        <li onClick={() => setFilterTodos('completed')}>Completed</li>
       </ul>
       <button onClick={handleClearing}>Clear completed</button>
     </section>
