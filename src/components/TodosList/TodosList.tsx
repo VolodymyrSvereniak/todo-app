@@ -11,6 +11,7 @@ import TodosControls from "./TodosControls";
 interface IUpdateTodoStatus {
   todoID: string;
   selectCompletedID: boolean;
+  setNonActiveStatus: boolean;
 }
 
 const TodosList = () => {
@@ -32,8 +33,12 @@ const TodosList = () => {
   });
 
   const { mutate: handleAsCompleted } = useMutation({
-    mutationFn: ({ todoID, selectCompletedID }: IUpdateTodoStatus) =>
-      setAsCompleted(todoID, selectCompletedID),
+    mutationFn: ({
+      todoID,
+      selectCompletedID,
+      setNonActiveStatus,
+    }: IUpdateTodoStatus) =>
+      setAsCompleted(todoID, selectCompletedID, setNonActiveStatus),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
@@ -55,6 +60,7 @@ const TodosList = () => {
               handleAsCompleted({
                 todoID: todo.id,
                 selectCompletedID: !todo.isCompleted,
+                setNonActiveStatus: !todo.isActive,
               })
             }
           />

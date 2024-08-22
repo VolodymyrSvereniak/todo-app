@@ -8,6 +8,7 @@ import {
   updateDoc,
   doc,
   deleteDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
@@ -21,7 +22,7 @@ interface ITodos {
 type TodosWithoutId = Omit<ITodos, "id">;
 
 export const useGetAllTodos = async (): Promise<ITodos[]> => {
-  const q = query(collection(db, "todo"), orderBy("createdAt"));
+  const q = query(collection(db, "todos"), orderBy("createdAt"));
 
   try {
     const querySnapshot = await getDocs(q);
@@ -48,7 +49,7 @@ export const useAddTodo = async (
   e.preventDefault();
 
   try {
-    await addDoc(collection(db, "todo"), {
+    await addDoc(collection(db, "todos"), {
       title: inputValue,
       isActive: true,
       isCompleted: false,
@@ -64,7 +65,7 @@ export const useAddTodo = async (
 
 export const useDeleteTodo = async (id: string) => {
   try {
-    await deleteDoc(doc(db, "todo", id));
+    await deleteDoc(doc(db, "todos", id));
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error(error.message);
@@ -73,12 +74,17 @@ export const useDeleteTodo = async (id: string) => {
   }
 };
 
-export const setAsCompleted = async (id: string, completedStatus: boolean) => {
-  const todoRef = doc(db, "todo", id);
+export const setAsCompleted = async (
+  id: string,
+  completedStatus: boolean,
+  setNonActiveStatus: boolean
+) => {
+  const todoRef = doc(db, "todos", id);
 
   try {
     await updateDoc(todoRef, {
       isCompleted: completedStatus,
+      isActive: setNonActiveStatus,
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -88,4 +94,19 @@ export const setAsCompleted = async (id: string, completedStatus: boolean) => {
   }
 };
 
-// export const setAsActive;
+export const useDeleteCompletedTodos = async () => {
+  try {
+    const q = query(collection(db, "todos"), where("isCompleted", "==", true));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.docs.map((document) => {
+      const docRef = doc(db, "todos", document.id);
+      deleteDoc(docRef);
+    });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+    throw Error("Something went wrong");
+  }
+};
