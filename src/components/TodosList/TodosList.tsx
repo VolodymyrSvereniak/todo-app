@@ -1,13 +1,22 @@
 import styled from "./TodosList.module.scss";
-import { useGetTodos, useDeleteTodo } from "../../services/todosService";
+import {
+  useGetAllTodos,
+  useDeleteTodo,
+  setAsCompleted,
+} from "../../services/todosService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import TodoItem from "../TodoItem/TodoItem";
 import TodosControls from "./TodosControls";
 
+interface IUpdateTodoStatus {
+  todoID: string;
+  selectCompletedID: boolean;
+}
+
 const TodosList = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["todos"],
-    queryFn: useGetTodos,
+    queryFn: useGetAllTodos,
     staleTime: Infinity,
   });
 
@@ -17,6 +26,14 @@ const TodosList = () => {
 
   const { mutate: handleDeleteTodo } = useMutation({
     mutationFn: (id: string) => useDeleteTodo(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
+
+  const { mutate: handleAsCompleted } = useMutation({
+    mutationFn: ({ todoID, selectCompletedID }: IUpdateTodoStatus) =>
+      setAsCompleted(todoID, selectCompletedID),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
@@ -32,8 +49,14 @@ const TodosList = () => {
         {data?.map((todo) => (
           <TodoItem
             key={todo.id}
+            todoTitle={todo.title}
             handleDeleteTodo={() => handleDeleteTodo(todo.id)}
-            todos={todo.title}
+            handleAsCompleted={() =>
+              handleAsCompleted({
+                todoID: todo.id,
+                selectCompletedID: !todo.isCompleted,
+              })
+            }
           />
         ))}
       </ul>
