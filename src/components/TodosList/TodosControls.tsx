@@ -1,14 +1,17 @@
+import styled from "./TodosList.module.scss";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDeleteCompletedTodos } from "../../services/todosDBService";
 
 interface ITodosControlsProps {
-  className: string;
+  filterTodos: string;
   setFilterTodos: React.Dispatch<React.SetStateAction<string>>;
+  itemsLeft: number;
 }
 
 const TodosControls: React.FC<ITodosControlsProps> = ({
-  className: controls,
-  setFilterTodos
+  filterTodos,
+  setFilterTodos,
+  itemsLeft,
 }) => {
   const queryClient = useQueryClient();
 
@@ -24,14 +27,31 @@ const TodosControls: React.FC<ITodosControlsProps> = ({
   };
 
   return (
-    <section className={controls}>
-      <span>items left</span>
-      <ul>
-        <li onClick={() => setFilterTodos('all')}>All</li>
-        <li onClick={() => setFilterTodos('active')}>Active</li>
-        <li onClick={() => setFilterTodos('completed')}>Completed</li>
+    <section className={styled.controls}>
+      <span className={styled.itemsLeft}>{itemsLeft} items left</span>
+      <ul className={styled.controlsButtons}>
+        <li
+          className={`${filterTodos === "all" && styled.all}`}
+          onClick={() => setFilterTodos("all")}
+        >
+          All
+        </li>
+        <li
+          className={`${filterTodos === "active" && styled.active}`}
+          onClick={() => setFilterTodos("active")}
+        >
+          Active
+        </li>
+        <li
+          className={`${filterTodos === "completed" && styled.completed}`}
+          onClick={() => setFilterTodos("completed")}
+        >
+          Completed
+        </li>
       </ul>
-      <button onClick={handleClearing}>Clear completed</button>
+      <button className={styled.clearButton} onClick={handleClearing}>
+        Clear completed
+      </button>
     </section>
   );
 };

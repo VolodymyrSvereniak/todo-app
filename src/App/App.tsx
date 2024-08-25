@@ -1,4 +1,4 @@
-import "./App.scss";
+import "./mixins.scss";
 import MainContent from "../components/MainContent/MainContent";
 
 const App: React.FC = () => {

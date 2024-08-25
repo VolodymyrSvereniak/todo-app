@@ -1,0 +1,68 @@
+.container {
+  background-color: var(--colors-todos);
+  border-radius: 0.3rem;
+  box-shadow: 0 0 8px var(--colors-shadow);
+
+  .todosList {
+    color: var(--colors-todoTitle);
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-weight: var(--fw-bold);
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--colors-control);
+    font-size: 14px;
+    flex: 1;
+
+    .itemsLeft {
+      display: flex;
+      padding-left: 20px;
+    }
+
+    .controlsButtons {
+      display: flex;
+      list-style: none;
+      gap: 1rem;
+      padding: 0;
+
+      .all {
+        color: var(--colors-control-active);
+      }
+
+      .active {
+        color: var(--colors-control-active);
+      }
+
+      .completed {
+        color: var(--colors-control-active);
+      }
+
+      li {
+        cursor: pointer;
+        font-weight: var(--fw-bold);
+
+        &:hover {
+          color: var(--colors-control-hover);
+        }
+      }
+    }
+
+    .clearButton {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding-right: 20px;
+      color: var(--colors-control);
+
+      &:hover {
+        color: var(--colors-control-hover);
+      }
+    }
+  }
+}

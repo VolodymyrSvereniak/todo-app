@@ -1,4 +1,4 @@
-import styles from "./InputForm.module.scss";
+import styled from "./InputForm.module.scss";
 import { useInputStore } from "./useInputStore";
 import { useAddTodo } from "../../services/todosDBService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -19,13 +19,15 @@ const InputForm = () => {
   });
 
   return (
-    <form onSubmit={(e) => handleAddTodo(e)}>
+    <form className={styled.container} onSubmit={(e) => handleAddTodo(e)}>
       <input
+        className={styled.input}
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        placeholder="Create a new todo..."
       />
-      <button type="submit" className={styles.submitButton} />
+      <button className={styled.submitButton} type="submit" />
     </form>
   );
 };

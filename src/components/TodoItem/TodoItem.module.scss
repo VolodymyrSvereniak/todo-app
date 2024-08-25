@@ -1,0 +1,47 @@
+@import "../../App/mixins.scss";
+
+.itemWrapper {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  border-bottom: 1px solid var(--colors-borderline);
+
+  .submitButton {
+    @include styledButton();
+    background: none;
+    border: 1px solid var(--colors-borderline);
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .markedSubmitButton {
+    @include styledButton();
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .deleteButton {
+    visibility: hidden;
+    background: none;
+    border: none;
+    order: 1;
+    margin-left: auto;
+    padding: 0;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+
+  &:hover {
+    .deleteButton {
+      visibility: visible;
+    }
+  }
+
+  .title {
+    text-decoration: line-through;
+    color: var(--colors-marked);
+    font-weight: var(--fw-normal);
+    color: var(--colors-markedTitle);
+  }
+}

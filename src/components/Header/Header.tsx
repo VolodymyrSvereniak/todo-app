@@ -1,8 +1,25 @@
+import styled from "./Header.module.scss";
+import { useEffect, useState } from "react";
+import sun from "../../assets/icon-sun.svg";
+import moon from "../../assets/icon-moon.svg";
+
 const Header = () => {
+  const [theme, setTheme] = useState<string>("light");
+
+  const handleThemeSwitch = () => {
+    setTheme((t) => (t === "light" ? "dark" : "light"));
+  };
+
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+  }, [theme]);
+
   return (
-    <div>
-      <h1>TODO</h1>
-      <button>Theme</button>
+    <div className={styled.container}>
+      <h1 className={styled.title}>TODO</h1>
+      <button className={styled.themeSwitcher} onClick={handleThemeSwitch}>
+        <img src={theme === "light" ? moon : sun} alt="sun" />
+      </button>
     </div>
   );
 };

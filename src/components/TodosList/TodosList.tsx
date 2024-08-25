@@ -16,14 +16,13 @@ interface IUpdateTodoStatus {
 }
 
 const TodosList = () => {
-  const [filterTodos, setFilterTodos] = useState<string>("");
+  const [filterTodos, setFilterTodos] = useState<string>("all");
 
   const { data, isLoading } = useQuery({
     queryKey: ["todos"],
     queryFn: useGetAllTodos,
     staleTime: Infinity,
   });
-
   console.log(data);
 
   const filteredTodos = data?.filter((todo) => {
@@ -31,6 +30,11 @@ const TodosList = () => {
     if (filterTodos === "active") return todo.isActive;
     return true;
   });
+
+  const itemsLeft = (data ?? []).filter(
+    (todo) => todo.isCompleted === false
+  ).length;
+  console.log(itemsLeft);
 
   const queryClient = useQueryClient();
 
@@ -58,11 +62,12 @@ const TodosList = () => {
   }
 
   return (
-    <div>
-      <ul>
+    <div className={styled.container}>
+      <ul className={styled.todosList}>
         {filteredTodos?.map((todo) => (
           <TodoItem
             key={todo.id}
+            isCompletedMark={todo.isCompleted}
             todoTitle={todo.title}
             handleDeleteTodo={() => handleDeleteTodo(todo.id)}
             handleAsCompleted={() =>
@@ -76,8 +81,9 @@ const TodosList = () => {
         ))}
       </ul>
       <TodosControls
-        className={styled.controls}
+        filterTodos={filterTodos}
         setFilterTodos={setFilterTodos}
+        itemsLeft={itemsLeft}
       />
     </div>
   );
