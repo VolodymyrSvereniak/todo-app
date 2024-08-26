@@ -4,7 +4,10 @@ import sun from "../../assets/icon-sun.svg";
 import moon from "../../assets/icon-moon.svg";
 
 const Header = () => {
-  const [theme, setTheme] = useState<string>("light");
+  const [theme, setTheme] = useState<string>(() => {
+    const defaultTheme = localStorage.getItem("theme") || "light";
+    return defaultTheme;
+  });
 
   const handleThemeSwitch = () => {
     setTheme((t) => (t === "light" ? "dark" : "light"));
@@ -12,6 +15,8 @@ const Header = () => {
 
   useEffect(() => {
     document.body.setAttribute("data-theme", theme);
+
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   return (
