@@ -1,7 +1,7 @@
 .container {
   background-color: var(--colors-todos);
   border-radius: 0.3rem;
-  box-shadow: 0 0 8px var(--colors-shadow);
+  box-shadow: 0 0 0.5rem var(--colors-shadow);
 
   .todosList {
     color: var(--colors-todoTitle);
@@ -12,17 +12,26 @@
     font-weight: var(--fw-bold);
   }
 
+  .emptyList {
+    text-align: center;
+    color: var(--colors-noTodos);
+  }
+
   .controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: var(--colors-control);
-    font-size: 14px;
+    font-size: 0.875rem;
     flex: 1;
 
     .itemsLeft {
       display: flex;
-      padding-left: 20px;
+      padding-left: 1.25rem;
+
+      @media (max-width: 768px) {
+        padding-bottom: 3.125rem;
+      }
     }
 
     .controlsButtons {
@@ -51,17 +60,25 @@
           color: var(--colors-control-hover);
         }
       }
+
+      @media (max-width: 768px) {
+        padding-top: 6.25rem;
+      }
     }
 
     .clearButton {
       background: none;
       border: none;
       cursor: pointer;
-      padding-right: 20px;
+      padding-right: 1.25rem;
       color: var(--colors-control);
 
       &:hover {
         color: var(--colors-control-hover);
+      }
+
+      @media (max-width: 768px) {
+        padding-bottom: 3.125rem;
       }
     }
   }

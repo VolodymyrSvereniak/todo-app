@@ -23,7 +23,7 @@ const Header = () => {
     <div className={styled.container}>
       <h1 className={styled.title}>TODO</h1>
       <button className={styled.themeSwitcher} onClick={handleThemeSwitch}>
-        <img src={theme === "light" ? moon : sun} alt="sun" />
+        <img src={theme === "light" ? moon : sun} alt="sun/moon" />
       </button>
     </div>
   );

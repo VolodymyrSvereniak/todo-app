@@ -63,23 +63,27 @@ const TodosList = () => {
 
   return (
     <div className={styled.container}>
-      <ul className={styled.todosList}>
-        {filteredTodos?.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            isCompletedMark={todo.isCompleted}
-            todoTitle={todo.title}
-            handleDeleteTodo={() => handleDeleteTodo(todo.id)}
-            handleAsCompleted={() =>
-              handleAsCompleted({
-                todoID: todo.id,
-                selectCompletedID: !todo.isCompleted,
-                setNonActiveStatus: !todo.isActive,
-              })
-            }
-          />
-        ))}
-      </ul>
+      {filteredTodos && filteredTodos?.length > 0 ? (
+        <ul className={styled.todosList}>
+          {filteredTodos?.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              isCompletedMark={todo.isCompleted}
+              todoTitle={todo.title}
+              handleDeleteTodo={() => handleDeleteTodo(todo.id)}
+              handleAsCompleted={() =>
+                handleAsCompleted({
+                  todoID: todo.id,
+                  selectCompletedID: !todo.isCompleted,
+                  setNonActiveStatus: !todo.isActive,
+                })
+              }
+            />
+          ))}
+        </ul>
+      ) : (
+        <p className={styled.emptyList}>There are no todos yet</p>
+      )}
       <TodosControls
         filterTodos={filterTodos}
         setFilterTodos={setFilterTodos}

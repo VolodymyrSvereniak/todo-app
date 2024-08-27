@@ -8,6 +8,7 @@
 body[data-theme="light"] {
   /*global*/
   --bg-img: url("./assets/bg-desktop-light.jpg");
+  --bg-img-mobile: url("./assets/bg-mobile-light.jpg");
   --colors-bg: hsl(236, 33%, 92%);
   --colors-input: hsl(0, 0%, 98%);
   --colors-inputFont: hsl(235, 19%, 35%);
@@ -19,6 +20,7 @@ body[data-theme="light"] {
   --colors-borderline: hsl(236, 9%, 61%);
   --colors-title: hsl(0, 0%, 98%);
   --colors-todos: hsl(0, 0%, 98%);
+  --colors-noTodos: hsl(235, 19%, 35%);
 
   /*controls*/
   --colors-control: hsl(236, 9%, 61%);
@@ -30,6 +32,7 @@ body[data-theme="light"] {
 body[data-theme="dark"] {
   /*global*/
   --bg-img: url("./assets/bg-desktop-dark.jpg");
+  --bg-img-mobile: url("./assets/bg-mobile-dark.jpg");
   --colors-bg: hsl(235, 21%, 11%);
   --colors-input: hsl(235, 24%, 19%);
   --colors-inputFont: hsl(234, 39%, 85%);
@@ -41,6 +44,7 @@ body[data-theme="dark"] {
   --colors-borderline: hsl(234, 11%, 52%);
   --colors-title: hsl(233, 11%, 84%);
   --colors-todos: hsl(235, 24%, 19%);
+  --colors-noTodos: hsl(234, 39%, 85%);
 
   /*controls*/
   --colors-control: hsl(234, 11%, 52%);
@@ -60,4 +64,11 @@ body {
   height: 40vh;
   padding-top: 50px;
   font-weight: var(--fw-normal);
+}
+
+@media (max-width: 768px) {
+  body {
+    height: 25vh;
+    background-image: var(--bg-img-mobile);
+  }
 }

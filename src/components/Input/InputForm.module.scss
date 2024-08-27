@@ -5,7 +5,6 @@
   align-items: center;
   position: relative;
   height: 60px;
-  justify-content: space-between;
   border: none;
   margin-bottom: 3.125rem;
 
@@ -13,7 +12,7 @@
     background-color: var(--colors-input);
     color: var(--colors-inputFont);
     flex: 1;
-    width: 21.875rem;
+    // width: 21.875rem;
     height: 100%;
     border-radius: 0.5rem;
     border: none;
