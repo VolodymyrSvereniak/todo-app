@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import TodoItem from "../TodoItem/TodoItem";
 import TodosControls from "./TodosControls";
 import { useState } from "react";
+import { PulseLoader } from "react-spinners";
 
 interface IUpdateTodoStatus {
   todoID: string;
@@ -58,7 +59,7 @@ const TodosList = () => {
   });
 
   if (isLoading) {
-    return <p>loading...</p>;
+    return  <PulseLoader className={styled.loader}/>;
   }
 
   return (
